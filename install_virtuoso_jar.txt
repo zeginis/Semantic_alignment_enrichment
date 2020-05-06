@@ -1,0 +1,2 @@
+install:install-file -q  -Dfile=E:\MyDocuments\Documents\code\semanticEnrichment\lib\virt_jena3.jar  -DgroupId=com.openlink.virtuoso  -DartifactId=virt_jena3   -Dversion=3.0   -Dpackaging=jar   -DgeneratePom=true
+install:install-file -q  -Dfile=E:\MyDocuments\Documents\code\semanticEnrichment\lib\virtjdbc4.jar -DgroupId=com.openlink.virtuoso -DartifactId=virtjdbc4 -Dversion=4.0  -Dpackaging=jar  -DgeneratePom=true
