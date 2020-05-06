@@ -42,4 +42,4 @@ security/target/
 selenium-debug.log
 
 !.mvn/wrapper/maven-wrapper.jar
-! backend/lib/*.jar
+!backend/lib/*.jar
