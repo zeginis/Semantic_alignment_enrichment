@@ -10,8 +10,10 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.cybele.semanticenrichment.config.VirtuosoProperties;
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.domain.SKOSConcept;
 import com.cybele.semanticenrichment.util.DatasetUtils;
@@ -28,12 +30,15 @@ public class DatasetRepository {
 		 
 	private static final Logger LOG = LoggerFactory.getLogger(DatasetRepository.class);  
   
-  public Dataset insertDataset(Dataset dataset) {
+	@Autowired
+	VirtuosoProperties vp;
+	
+	public Dataset insertDataset(Dataset dataset) {
 	  LOG.info("Inserting dataset:"+dataset);
 	  if(dataset.getUri()==null) {
 		  dataset.setUri(DatasetUtils.randomURI("dataset"));
 	  }
-	  String sparql = "INSERT DATA{ GRAPH <http://testgraph.org>{"
+	  String sparql = "INSERT DATA{ GRAPH <"+vp.getDataGraph()+">{"
 	  		+ "<"+dataset.getUri()+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/dcat#Dataset>.";
 	  if(dataset.getLabel()!=null && !dataset.getLabel().equals("")) {
 		  sparql+= "<"+dataset.getUri()+"> <http://www.w3.org/2000/01/rdf-schema#label> \"" +dataset.getLabel()+"\".";
@@ -75,10 +80,7 @@ public class DatasetRepository {
 		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/publisher> \"" +dataset.getPublisher()+"\".";
 	  }
 	  sparql+="}}";
-	  LOG.info(sparql);
-	  VirtGraph set = new VirtGraph ("jdbc:virtuoso://localhost:1111", "dba", "dba");
-	 	  	  
-	 // VirtGraph set = new VirtGraph ("jdbc:virtuoso://"+virtuosoEndpoint+":"+virtuosoPort, virtuosoUser, virtuosoPassword);
+	  VirtGraph set = new VirtGraph ("jdbc:virtuoso://"+vp.getEndpoint()+":"+vp.getPort(), vp.getUser(), vp.getPassword());
 	  VirtuosoUpdateRequest update = VirtuosoUpdateFactory.create(sparql,set);
 	  update.exec();	   
 	  return dataset;
@@ -89,7 +91,7 @@ public class DatasetRepository {
 	  String query="PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
 	  		+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
 	  		+ "select ?concept ?label "
-	  		+ "FROM  "+SPARQL_URIs.CODELIST_GRAPH
+	  		+ "FROM  <"+vp.getCodelistGraph()+">"
 	  		+ " where{?concept skos:inScheme "+SPARQL_URIs.CODELISTS.get(codelist)+"."
 	  		+ "?concept skos:prefLabel ?label.\n" 
 	  		+ "FILTER langMatches( lang(?label), \"en\" ) }"
