@@ -19,11 +19,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .httpBasic()
         .and()
             .authorizeRequests()
-                .antMatchers("/api/hello").permitAll()
-                .antMatchers("/api/user/**").permitAll() // allow every URI, that begins with '/api/user/'
-                .antMatchers("/api/dataset").permitAll() // allow every URI, that begins with '/api/user/'
-                .antMatchers("/api/codelist/**").permitAll() // allow every URI, that begins with '/api/user/'
-                .antMatchers("/api/secured").authenticated()
+                .antMatchers("/api/dataset").permitAll() // allow every URI, that begins with '/api/dataset/'
+                .antMatchers("/api/codelist/**").permitAll() // allow every URI, that begins with '/api/codelist/'              
                
         .and()
             .csrf().disable(); // disable cross site request forgery, as we don't use cookies - otherwise ALL PUT, POST, DELETE will get HTTP 403!

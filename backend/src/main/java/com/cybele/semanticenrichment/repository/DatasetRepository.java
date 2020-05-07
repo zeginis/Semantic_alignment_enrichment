@@ -10,10 +10,8 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cybele.semanticenrichment.config.VirtuosoProperties;
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.domain.SKOSConcept;
 import com.cybele.semanticenrichment.util.DatasetUtils;
@@ -27,10 +25,7 @@ import virtuoso.jena.driver.VirtuosoUpdateRequest;
 
 @Component
 public class DatasetRepository {
-	
-	@Autowired
-	private VirtuosoProperties prop;
-	  
+		 
 	private static final Logger LOG = LoggerFactory.getLogger(DatasetRepository.class);  
   
   public Dataset insertDataset(Dataset dataset) {

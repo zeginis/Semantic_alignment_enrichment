@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.domain.SKOSConcept;
-import com.cybele.semanticenrichment.repository.SPARQL_URIs;
 import com.cybele.semanticenrichment.repository.DatasetRepository;
 import com.cybele.semanticenrichment.util.DatasetUtils;
 
@@ -26,10 +25,7 @@ import com.cybele.semanticenrichment.util.DatasetUtils;
 public class BackendController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BackendController.class);
-
-    
-    public static final String SECURED_TEXT = "Hello from the secured resource!";
-    
+            
     @PostMapping(path = "/dataset")
     @ResponseStatus(HttpStatus.CREATED)
     public URI addNewDataset (@RequestBody Dataset dataset) {

@@ -1,7 +1,6 @@
 package com.cybele.semanticenrichment.domain;
 
 import java.net.URI;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
