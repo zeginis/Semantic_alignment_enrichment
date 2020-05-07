@@ -60,21 +60,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-		</dependency>
-
-		<!-- Switch back from Spring Boot 2.x standard HikariCP to Tomcat JDBC,
-		configured later in Heroku (see https://stackoverflow.com/a/49970142/4964553) -->
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
-		</dependency>
-
-		<!-- PostgreSQL used in Staging and Production environment, e.g. on Heroku 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>-->
+		</dependency>	
 
 		<!-- Testing -->
 		<dependency>
@@ -90,13 +76,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-	<!--	<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>3.0.0</version>
-			<scope>test</scope>
-		</dependency> -->
-
 		<!-- Secure backend API -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
