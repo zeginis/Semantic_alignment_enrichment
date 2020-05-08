@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.domain.SKOSConcept;
+import com.cybele.semanticenrichment.exception.CodelistNotFoundException;
 import com.cybele.semanticenrichment.repository.DatasetRepository;
 import com.cybele.semanticenrichment.util.DatasetUtils;
 
@@ -41,8 +42,13 @@ public class BackendController {
 
     @GetMapping(path = "/codelist/{id}")
     public List<SKOSConcept> getCodelist(@PathVariable("id") String id) {
-    	List<SKOSConcept> list=dtr.getCodelistContent(id);
-        return list;
+    	LOG.info("Reading codelist with id " + id + " from database.");
+        List<SKOSConcept> list=dtr.getCodelistContent(id);
+        if (list.size()>0) {
+        	return list;
+        }else {
+        	throw new CodelistNotFoundException("The codelist with the id " + id + " couldn't be found.");
+        }
     }
   
 
