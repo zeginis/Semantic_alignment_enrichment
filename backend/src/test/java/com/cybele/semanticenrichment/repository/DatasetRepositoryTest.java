@@ -1,21 +1,20 @@
 package com.cybele.semanticenrichment.repository;
 
+import static org.hamcrest.Matchers.contains;
+import static org.junit.Assert.assertThat;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.util.DatasetUtils;
-
-import java.util.List;
-
-import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -61,7 +60,7 @@ public class DatasetRepositoryTest {
 
 	    @Test
 	    public void testFindByLanguage() throws Exception {
-	        // Search for specific Dataset in Database according to firstname
+	        // Search for specific Dataset in Database according to language
 	    	 List<Dataset> datasetsWithLanguagegreek = datasetRepo.findByLanguage(lang2);
 		     assertThat(datasetsWithLanguagegreek, contains(d2));	    	
 	    }

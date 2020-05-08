@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cybele.semanticenrichment.config.VirtuosoProperties;
+import com.cybele.semanticenrichment.configuration.VirtuosoProperties;
 import com.cybele.semanticenrichment.domain.Dataset;
 import com.cybele.semanticenrichment.domain.SKOSConcept;
 import com.cybele.semanticenrichment.util.DatasetUtils;
@@ -87,31 +87,37 @@ public class DatasetRepository {
   }
   
   public List<SKOSConcept> getCodelistContent(String codelist) {
-	  LOG.info("Retrieving codelist:"+codelist);
-	  String query="PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
-	  		+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-	  		+ "select ?concept ?label "
-	  		+ "FROM  <"+vp.getCodelistGraph()+">"
-	  		+ " where{?concept skos:inScheme "+SPARQL_URIs.CODELISTS.get(codelist)+"."
-	  		+ "?concept skos:prefLabel ?label.\n" 
-	  		+ "FILTER langMatches( lang(?label), \"en\" ) }"
-	  		+ "ORDER BY ?label";	  
-	  LOG.info(query);
-	  VirtGraph set = new VirtGraph ("jdbc:virtuoso://localhost:1111", "dba", "dba");
-
-	  Query sparql = QueryFactory.create(query);
-	  VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, set);  
-	  
-	  ResultSet results = vqe.execSelect();
+	  	  
 	  List<SKOSConcept> list=new ArrayList<SKOSConcept>();
-	  while (results.hasNext()) {
-		QuerySolution result = results.nextSolution();
-		SKOSConcept c=new SKOSConcept();
-		c.setURI(result.get("concept").toString());
-		c.setLabel(result.get("label").asLiteral().getString());
-		list.add(c);
+	  String codelistURI=SPARQL_URIs.CODELISTS.get(codelist);
+	  if(codelistURI!=null) {
+		  LOG.info("Retrieving codelist:"+codelist);
+		  String query="PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
+		  		+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+		  		+ "select ?concept ?label "
+		  		+ "FROM  <"+vp.getCodelistGraph()+">"
+		  		+ " where{?concept skos:inScheme "+codelistURI+"."
+		  		+ "?concept skos:prefLabel ?label.\n" 
+		  		+ "FILTER langMatches( lang(?label), \"en\" ) }"
+		  		+ "ORDER BY ?label";	  
+		  VirtGraph set = new VirtGraph ("jdbc:virtuoso://"+vp.getEndpoint()+":"+vp.getPort(), vp.getUser(), vp.getPassword());
+	
+		  Query sparql = QueryFactory.create(query);
+		  VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create (sparql, set);  
+		  
+		  ResultSet results = vqe.execSelect();		 
+		  while (results.hasNext()) {
+			QuerySolution result = results.nextSolution();
+			SKOSConcept c=new SKOSConcept();
+			c.setURI(result.get("concept").toString());
+			c.setLabel(result.get("label").asLiteral().getString());
+			list.add(c);
+		  }
+	  }else {
+		  LOG.info("Codelist not found:"+codelist);
 	  }
 	  return list;
+	  
 	
   }
   
