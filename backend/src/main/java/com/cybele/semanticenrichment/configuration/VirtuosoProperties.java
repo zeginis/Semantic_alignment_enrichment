@@ -1,4 +1,4 @@
-package com.cybele.semanticenrichment.config;
+package com.cybele.semanticenrichment.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
