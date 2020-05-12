@@ -92,16 +92,12 @@
 		<dependency>
 			<groupId>com.openlink.virtuoso</groupId>
 			<artifactId>virtjdbc4</artifactId>
-  			<version>4.0</version>
-  			<scope>system</scope>
-			<systemPath>${basedir}/lib/virtjdbc4.jar</systemPath>
+  			<version>4.0</version>  	
 		</dependency>
 		<dependency>
   			<groupId>com.openlink.virtuoso</groupId>
    			<artifactId>virt_jena3</artifactId>
-   			<version>3.0</version>
-   			<scope>system</scope>
-			<systemPath>${basedir}/lib/virt_jena3.jar</systemPath>
+   			<version>3.0</version>   		
    		</dependency>
    		
    		<!-- Apache Jena -->
@@ -119,6 +115,12 @@
    			</artifactId>
    			<optional>true</optional>
    		</dependency>
+   		
+   		<dependency>
+   			<groupId>org.hibernate</groupId>
+   			<artifactId>hibernate-validator</artifactId>
+   			<version>6.0.16.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -153,8 +155,42 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>  
+    			<groupId>org.apache.maven.plugins</groupId>
+   				<artifactId>maven-install-plugin</artifactId>   				
+    			<executions>  
+        			<execution>  
+            			<id>install-virtjdbc</id>  
+            			<phase>validate</phase>
+            			<goals>  
+                			<goal>install-file</goal>  
+            			</goals>  
+			            <configuration>  
+			                <groupId>com.openlink.virtuoso</groupId>  
+			                <artifactId>virtjdbc4</artifactId>  
+			                <version>4.0</version>  
+			                <packaging>jar</packaging>  
+			                <file>${project.basedir}/lib/virtjdbc4.jar</file>  
+			                <generatePom>true</generatePom>
+			            </configuration>  			            	            
+			        </execution>  
+			        <execution>  
+			            <id>install-virt-jena</id>  
+			            <phase>validate</phase> 
+			            <goals>  
+			                <goal>install-file</goal>  
+			            </goals>  
+			            <configuration>  
+			                <groupId>com.openlink.virtuoso</groupId>  
+			                <artifactId>virt_jena3</artifactId>  
+			                <version>3.0</version>  
+			                <packaging>jar</packaging>  
+			                <file>${project.basedir}/lib/virt_jena3.jar</file>
+			                <generatePom>true</generatePom>  
+			            </configuration>		            
+			        </execution>  
+			    </executions>  
+			</plugin>  		
 		</plugins>
 	</build>
-
-
 </project>

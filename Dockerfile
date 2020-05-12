@@ -9,9 +9,11 @@ WORKDIR /semanticEnrichment
 # Just echo so we can see, if everything is there :)
 RUN ls -l
 
+# Run Maven validate
+RUN mvn validate
+
 # Run Maven build
 RUN mvn clean install
-
 
 # Just using the build artifact and then removing the build-container
 FROM openjdk:11-jdk
