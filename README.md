@@ -13,9 +13,44 @@ semanticEnrichment
 └── pom.xml     → Maven parent pom managing both modules
 ```
 
+## Application configuration
+
+Configure virtuoso at the files:
+
+```
+src/main/resources/application.properties
+src/test/resources/application.properties
+```
+
+Configuration parameters:
+
+```
+virtuoso.endpoint=localhost
+virtuoso.port=1111
+virtuoso.user=dba
+virtuoso.password=dba
+virtuoso.codelistGraph=http://localhost:8890/codelists
+virtuoso.dataGraph=http://testgraph.org
+```
+
+| Parameter              | Description |
+| ---- | ----|
+| virtuoso.endpoint      | The virtuoso endpoint URL |
+| virtuoso.port          | The port virtuoso listens | 
+| virtuoso.user          | Username to connect to virtuoso |
+| virtuoso.password      | Password to connect to virtuoso |
+| virtuoso.codelistGraph | The GRAPH where the code lists are stored |
+| virtuoso.dataGraph     | The GRAPH to store the dataset metadata |
+
 ## Application run
 
 Inside the root directory, do a: 
+
+```
+mvn validate
+```
+
+Clean & install the application: 
 
 ```
 mvn clean install
