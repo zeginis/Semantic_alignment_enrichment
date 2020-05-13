@@ -36,13 +36,12 @@ public class BackendController {
     public URI addNewDataset (@RequestBody Dataset dataset) {
     	dataset.setUri(DatasetUtils.randomURI("dataset"));    	
     	Dataset insertedDataset= dtr.insertDataset(dataset);
-	    LOG.info(insertedDataset.toString() + " successfully saved into DB");
+	    LOG.info(insertedDataset.getUri() + " successfully saved into DB");
 	    return insertedDataset.getUri();
     }
 
     @GetMapping(path = "/codelist/{id}")
     public List<SKOSConcept> getCodelist(@PathVariable("id") String id) {
-    	LOG.info("Reading codelist with id " + id + " from database.");
         List<SKOSConcept> list=dtr.getCodelistContent(id);
         if (list.size()>0) {
         	return list;

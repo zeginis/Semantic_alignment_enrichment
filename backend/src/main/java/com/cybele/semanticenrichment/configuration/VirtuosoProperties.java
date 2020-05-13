@@ -11,14 +11,33 @@ public class VirtuosoProperties {
     private int port;
     private String user;
     private String password;
-    private String codelistGraph;
+    private String frequencyCodelistGraph;
+    private String languageCodelistGraph;
+    private String countryCodelistGraph;
     private String dataGraph;
     
-	public String getCodelistGraph() {
-		return codelistGraph;
+    
+    
+	
+    public String getfrequencyCodelistGraph() {
+		return frequencyCodelistGraph;
 	}
-	public void setCodelistGraph(String codelistGraph) {
-		this.codelistGraph = codelistGraph;
+	public void setfrequencyCodelistGraph(String frequencyCodelistGraph) {
+		this.frequencyCodelistGraph = frequencyCodelistGraph;
+	}
+	
+	public String getlanguageCodelistGraph() {
+		return languageCodelistGraph;
+	}
+	public void setlanguageCodelistGraph(String languageCodelistGraph) {
+		this.languageCodelistGraph = languageCodelistGraph;
+	}
+	
+    public String getcountryCodelistGraph() {
+		return countryCodelistGraph;
+	}
+	public void setcountryCodelistGraph(String countryCodelistGraph) {
+		this.countryCodelistGraph = countryCodelistGraph;
 	}
 	public String getDataGraph() {
 		return dataGraph;

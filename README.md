@@ -29,7 +29,9 @@ virtuoso.endpoint=localhost
 virtuoso.port=1111
 virtuoso.user=dba
 virtuoso.password=dba
-virtuoso.codelistGraph=http://localhost:8890/codelists
+virtuoso.frequencyCodelistGraph=http://localhost:8890/codelists
+virtuoso.languageCodelistGraph=http://localhost:8890/codelists
+virtuoso.countryCodelistGraph=http://localhost:8890/codelists
 virtuoso.dataGraph=http://testgraph.org
 ```
 
@@ -39,7 +41,9 @@ virtuoso.dataGraph=http://testgraph.org
 | virtuoso.port          | The port virtuoso listens | 
 | virtuoso.user          | Username to connect to virtuoso |
 | virtuoso.password      | Password to connect to virtuoso |
-| virtuoso.codelistGraph | The GRAPH where the code lists are stored |
+| virtuoso.frequencyCodelistGraph | The GRAPH where the frequency code list is stored (all codelists can be stored at the same GRAPH)|
+| virtuoso.languageCodelistGraph | The GRAPH where the language code list is stored  (all codelists can be stored at the same GRAPH)|
+| virtuoso.countryCodelistGraph | The GRAPH where the country code list is stored  (all codelists can be stored at the same GRAPH)|
 | virtuoso.dataGraph     | The GRAPH to store the dataset metadata |
 
 ## Application run

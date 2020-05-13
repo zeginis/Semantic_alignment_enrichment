@@ -94,9 +94,15 @@ public class DatasetRepository {
 		  LOG.info("Retrieving codelist:"+codelist);
 		  String query="PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
 		  		+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-		  		+ "select ?concept ?label "
-		  		+ "FROM  <"+vp.getCodelistGraph()+">"
-		  		+ " where{?concept skos:inScheme "+codelistURI+"."
+		  		+ "select ?concept ?label ";
+		  if(codelist.equals(SPARQL_URIs.ACCRUAL_PERIODICITY)) {
+			  query+= "FROM  <"+vp.getfrequencyCodelistGraph()+">";
+		  }else if(codelist.equals(SPARQL_URIs.COUNTRY)) {
+			  query+= "FROM  <"+vp.getcountryCodelistGraph()+">";
+		  }else if(codelist.equals(SPARQL_URIs.LANGUAGE)) {
+			  query+= "FROM  <"+vp.getlanguageCodelistGraph()+">";
+		  }
+		  query+= "where{?concept skos:inScheme "+codelistURI+"."
 		  		+ "?concept skos:prefLabel ?label.\n" 
 		  		+ "FILTER langMatches( lang(?label), \"en\" ) }"
 		  		+ "ORDER BY ?label";	  

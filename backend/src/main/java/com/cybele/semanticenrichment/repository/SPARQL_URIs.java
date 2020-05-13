@@ -6,8 +6,12 @@ import com.github.jsonldjava.shaded.com.google.common.collect.ImmutableMap;
 
 public final class SPARQL_URIs {
 		
+	 public static final String ACCRUAL_PERIODICITY="ACCRUAL_PERIODICITY";
+	 public static final String LANGUAGE="LANGUAGE";
+	 public static final String COUNTRY="COUNTRY";
+	
 	 public static final Map<String, String> CODELISTS = ImmutableMap.of(
-		      "ACCRUAL_PERIODICITY", "<http://purl.org/cld/terms/Frequency>",
-		      "LANGUAGE", "<http://publications.europa.eu/resource/authority/language>",
-		      "COUNTRY", "<http://publications.europa.eu/resource/authority/country>");
+			  ACCRUAL_PERIODICITY, "<http://purl.org/cld/terms/Frequency>",
+		      LANGUAGE, "<http://publications.europa.eu/resource/authority/language>",
+		      COUNTRY, "<http://publications.europa.eu/resource/authority/country>");
 }
