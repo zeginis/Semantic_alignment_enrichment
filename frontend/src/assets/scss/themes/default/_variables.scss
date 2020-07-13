@@ -54,6 +54,29 @@ $green: #3ac47d;
 $teal: #16E0BD;
 $cyan: #16aaff;
 $blue-light: #eeeeee;
+$cybele-blue: #0082DE; 
+$cybele-blue-secondary-1: #74ACC6;
+$cybele-blue-secondary-2: #639FD0;
+$cybele-blue-secondary-3: #25669D;
+$cybele-blue-secondary-4: #144798;
+$cybele-green: #B0EF5D;
+$cybele-green-secondary-1: #BDFF7B;
+$cybele-green-secondary-2: #A1D068;
+$cybele-green-secondary-3: #93C386;
+$cybele-green-secondary-4: #18BE83;
+$cybele-middle: #52B4A2;
+$cybele-label-1: #8BC8E5;
+$cybele-label-2: #639FD0;
+$cybele-label-3: #144798;
+$cybele-label-4: #B0F05D;
+$cybele-label-5: #A1D168;
+$cybele-label-6: #83C59B;
+$cybele-label-7: #EBEBEB;
+$cybele-label-8: #BFC5D2;
+$cybele-label-9: #8798AD;
+$cybele-gray-1: #8798AD;
+$cybele-gray-2: #BFC5D2;
+$cybele-gray-3: #639FD0;
 
 $primary: $brand;
 $secondary: $gray-600;
@@ -79,7 +102,30 @@ $theme-colors: map-merge(
                         "light": $light,
                         "dark": $dark,
                         "focus": $focus,
-                        "alternate": $alt
+                        "alternate": $alt,
+                        "cybele-blue": $cybele-blue,
+                        "cybele-green": $cybele-green,
+                        "cybele-blue-secondary-1": $cybele-blue-secondary-1,
+                        "cybele-blue-secondary-2": $cybele-blue-secondary-2,
+                        "cybele-blue-secondary-3": $cybele-blue-secondary-3,
+                        "cybele-blue-secondary-4": $cybele-blue-secondary-4,
+                        "cybele-green-secondary-1": $cybele-green-secondary-1,
+                        "cybele-green-secondary-2": $cybele-green-secondary-2,
+                        "cybele-green-secondary-3": $cybele-green-secondary-3,
+                        "cybele-green-secondary-4": $cybele-green-secondary-4,
+                        "cybele-middle": $cybele-middle,
+                        "cybele-label-1": $cybele-label-1,
+                        "cybele-label-2": $cybele-label-2,
+                        "cybele-label-3": $cybele-label-3,
+                        "cybele-label-4": $cybele-label-4,
+                        "cybele-label-5": $cybele-label-5,
+                        "cybele-label-6": $cybele-label-6,
+                        "cybele-label-7": $cybele-label-7,
+                        "cybele-label-8": $cybele-label-8,
+                        "cybele-label-9": $cybele-label-9,
+                        "cybele-gray-1": $cybele-gray-1,
+                        "cybele-gray-2": $cybele-gray-2,
+                        "cybele-gray-3": $cybele-gray-3
                 ),
                 $theme-colors
 );

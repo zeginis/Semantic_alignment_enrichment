@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100 bg-animation bg-grow-early">
+    <div class="h-100 bg-animation bg-cybele-gray-2">
         <div class="d-flex h-75 justify-content-center align-items-center">
             <b-col md="6" class="mx-auto app-login-box">
                 <div class="modal-dialog w-100">
@@ -12,7 +12,7 @@
                                     <span class="display-1 d-block text-muted">500</span>
                                     <div class="mb-1 lead text-dark">Looks like something went wrong. We're working on it.</div>
                                     <div class="mb-4 lead text-dark">Please try again.</div>
-                                    <b-button variant="warning shadow" @click="toHome">Back to Home</b-button>
+                                    <b-button class="cybele-button-default" variant="cybele-blue" @click="toHome">Back to Home</b-button>
                                 </div>
                             </div>
                         </div>

@@ -27,8 +27,8 @@
         <div class="app-header__menu">
             <span>
                 <b-button
-                    class="btn-icon btn-icon-only bg-grow-early"
-                    variant="success"
+                    class="btn-icon btn-icon-only"
+                    variant="cybele-blue"
                     size="sm"
                     v-bind:class="{ 'active' : isOpenMobileMenu }"
                     @click="toggleMobile2('header-menu-open')"

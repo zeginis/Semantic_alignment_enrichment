@@ -4,7 +4,7 @@
             <Header :headerbg="'null'"/>
         </transition>
         <transition name="fade" mode="out-in" appear>
-            <Sidebar :sidebarbg="'bg-grow-early text-lighter'"/>
+            <Sidebar :sidebarbg="'bg-white'"/>
         </transition>
         <div class="app-main__outer">
             <div class="app-main__inner">
