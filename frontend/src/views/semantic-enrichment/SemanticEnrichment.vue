@@ -44,8 +44,13 @@
     	<div class="form-group">
     		<label class="font-weight-bold my-0">Publisher *</label>
     		<p class="my-0"><small><em>The entity responsible for making the dataset available.</em></small></p>
-    		<input type="text" v-model="dataset.publisher" class="form-control" placeholder="Enter the publisher...">    		
-    	</div>   	
+    		<select v-if="isAgentReady"  v-model="dataset.publisher" class="form-control"  >
+  			  <option v-for="a in agentCodeList" v-bind:value="a.uri" >{{ a.label }} </option>
+  			</select>    
+  			<div v-if="!isAgentReady" v-cloak>
+  			   <input class="form-control" placeholder="Loading Agents...">    	
+  			</div>    		    		
+    	</div>    		
     	<div class="form-group">
     		<label class="font-weight-bold my-0">Issued</label>    		
     		<p class="my-0"><small><em>The date of listing the dataset in the CYBELE platform.</em></small></p>
@@ -100,7 +105,7 @@
     	<div class="form-group">
     		<label class="font-weight-bold my-0">Conforms to standard</label>
     		<p class="my-0"><small><em>	An established standard to which the distribution conforms. </em></small></p> 
-    		<input type="text" v-model="dataset.conformsTo" class="form-control" placeholder="Enter the conforms to standard...">    		
+    		<input type="text" v-model="dataset.conformsTo" class="form-control" placeholder="Enter the URI of the standard...">    		
     	</div>
     	<div class="form-group">
     		<label class="font-weight-bold my-0">Landing page</label>
@@ -141,8 +146,10 @@
         accrualPeriodicity: [],
         languageCodeList: [], 
         spatialCodeList:[],
+        agentCodeList:[],
         isLanguageReady: false,
         isSpatialReady:false,
+        isAgentReady:false,
         showRetrievedUser: false
       }
     },
@@ -150,6 +157,7 @@
   	  this.getAccrualPeriodicityCodelist();
   	  this.getLanguageCodelist();
   	  this.getSpatialCodelist();
+  	  this.getAgentCodelist();
     },
 	methods: {      
     	enterNewDataset(){
@@ -188,7 +196,10 @@
       	} 
       	if(this.dataset.landingPage && !this.validURL(this.dataset.landingPage)){
       		 this.errors.push("Landing page is not a valid URL.");
-      	}    	
+      	}  
+      	if(!this.validURL(this.dataset.conformsTo)){
+     		 this.errors.push("The conforms to standard is not a valid URL.");
+     	}  
       	      	
       	if (!this.errors.length) {
             return true;
@@ -240,6 +251,16 @@
               // JSON responses are automatically parsed.
               this.spatialCodeList = response.data;    
               this.isSpatialReady=true              
+            })           
+            .catch(e => {
+              this.errors.push(e)             
+            })    	  
+      },
+      getAgentCodelist(){
+    	  api.getCodelistContent('AGENT').then(response => {
+              // JSON responses are automatically parsed.
+              this.agentCodeList = response.data;    
+              this.isAgentReady=true              
             })           
             .catch(e => {
               this.errors.push(e)             

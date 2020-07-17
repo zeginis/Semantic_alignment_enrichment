@@ -14,6 +14,7 @@ public class VirtuosoProperties {
     private String frequencyCodelistGraph;
     private String languageCodelistGraph;
     private String countryCodelistGraph;
+    private String agentCodelistGraph;
     private String dataGraph;
     
     
@@ -68,7 +69,13 @@ public class VirtuosoProperties {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}         
+	}
+	public String getagentCodelistGraph() {
+		return agentCodelistGraph;
+	}
+	public void setagentCodelistGraph(String agentCodelistGraph) {
+		this.agentCodelistGraph = agentCodelistGraph;
+	} 
 }
 
 

@@ -9,6 +9,7 @@ public final class SPARQL_URIs {
 	 public static final String ACCRUAL_PERIODICITY="ACCRUAL_PERIODICITY";
 	 public static final String LANGUAGE="LANGUAGE";
 	 public static final String COUNTRY="COUNTRY";
+	 public static final String AGENT="AGENT";
 	
 	 public static final Map<String, String> CODELISTS = ImmutableMap.of(
 			  ACCRUAL_PERIODICITY, "<http://purl.org/cld/terms/Frequency>",
