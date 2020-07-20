@@ -25,6 +25,8 @@ import virtuoso.jena.driver.VirtuosoUpdateFactory;
 import virtuoso.jena.driver.VirtuosoUpdateRequest;
 
 
+
+
 @Component
 public class DatasetRepository {
 		 
@@ -41,7 +43,7 @@ public class DatasetRepository {
 	  String sparql = "INSERT DATA{ GRAPH <"+vp.getDataGraph()+">{"
 	  		+ "<"+dataset.getUri()+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/dcat#Dataset>.";
 	  if(dataset.getLabel()!=null && !dataset.getLabel().equals("")) {
-		  sparql+= "<"+dataset.getUri()+"> <http://www.w3.org/2000/01/rdf-schema#label> \"" +dataset.getLabel()+"\".";
+		  sparql+= "<"+dataset.getUri()+"> <http://purl.org/dc/terms/title> \"" +dataset.getLabel()+"\".";
 	  }
 	  if(dataset.getLanguage()!=null && !dataset.getLanguage().equals("")) {
 		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/language> <" +dataset.getLanguage()+">.";
@@ -109,6 +111,7 @@ public class DatasetRepository {
 		  }else if(codelist.equals(SPARQL_URIs.AGENT)) {
 			  query+= "FROM  <"+vp.getagentCodelistGraph()+">";
 		  }
+		  //Agents are not in a skos code list.
 		  if(codelist.equals(SPARQL_URIs.AGENT)) {
 			  query+= "where{?concept rdf:type foaf:Organization."
 				  		+ "?concept rdfs:label ?label.\n" 
