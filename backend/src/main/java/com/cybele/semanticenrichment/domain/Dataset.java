@@ -28,6 +28,10 @@ public class Dataset{
     private String temporalEnd;
     private String temporalResolution;
     
+    private String license;
+    private String mediaType;
+    private String byteSize;
+    
     
     public Dataset() {
 		super();
@@ -144,13 +148,38 @@ public class Dataset{
 	public void setTemporalResolution(String temporalResolution) {
 		this.temporalResolution = temporalResolution;
 	}
-    
+	
+	public String getLicense() {
+		return license;
+	}
+
+	public void setLicense(String license) {
+		this.license = license;
+	}
+	
+	public String getMediaType() {
+		return mediaType;
+	}
+
+	public void setMediaType(String mediaType) {
+		this.mediaType = mediaType;
+	}
+
+	public String getByteSize() {
+		return byteSize;
+	}
+
+	public void setByteSize(String byteSize) {
+		this.byteSize = byteSize;
+	}
+		    
     @Override
 	public String toString() {
 		return "Dataset [uri=" + uri + ", label=" + label + ", conformsTo=" + conformsTo + ", language=" + language
 				+ ", publisher=" + publisher + ", modified=" + modified + ", issued=" + issued + ", accrualPeriodicity="
 				+ accrualPeriodicity + ", landingPage=" + landingPage + ", spatial=" + spatial
 				+ ", spatialResolutionInMeters=" + spatialResolution + ", temporalStart=" + temporalStart
-				+ ", temporalEnd=" + temporalEnd+ ", temporalResolution=" + temporalResolution + "]";
+				+ ", temporalEnd=" + temporalEnd+ ", temporalResolution=" + temporalResolution 
+				+ ", license=" + license +", mediaType=" + mediaType + ", byteSize=" + byteSize+ "]";
 	}  
 }

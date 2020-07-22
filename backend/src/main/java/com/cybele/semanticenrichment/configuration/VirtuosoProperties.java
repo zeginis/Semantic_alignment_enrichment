@@ -15,10 +15,10 @@ public class VirtuosoProperties {
     private String languageCodelistGraph;
     private String countryCodelistGraph;
     private String agentCodelistGraph;
+    private String licenseCodelistGraph;
+    private String mediaTypeCodelistGraph;
     private String dataGraph;
-    
-    
-    
+        
 	
     public String getfrequencyCodelistGraph() {
 		return frequencyCodelistGraph;
@@ -75,7 +75,20 @@ public class VirtuosoProperties {
 	}
 	public void setagentCodelistGraph(String agentCodelistGraph) {
 		this.agentCodelistGraph = agentCodelistGraph;
-	} 
+	}
+	
+	public String getlicenseCodelistGraph() {
+		return licenseCodelistGraph;
+	}
+	public void setlicenseCodelistGraph(String licenseCodelistGraph) {
+		this.licenseCodelistGraph = licenseCodelistGraph;
+	}
+	public String getmediaTypeCodelistGraph() {
+		return mediaTypeCodelistGraph;
+	}
+	public void setmediaTypeCodelistGraph(String mediaTypeCodelistGraph) {
+		this.mediaTypeCodelistGraph = mediaTypeCodelistGraph;
+	}
 }
 
 

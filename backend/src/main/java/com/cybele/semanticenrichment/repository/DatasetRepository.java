@@ -2,7 +2,9 @@ package com.cybele.semanticenrichment.repository;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -31,7 +33,7 @@ import virtuoso.jena.driver.VirtuosoUpdateRequest;
 public class DatasetRepository {
 		 
 	private static final Logger LOG = LoggerFactory.getLogger(DatasetRepository.class);  
-  
+	  
 	@Autowired
 	VirtuosoProperties vp;
 	
@@ -81,8 +83,32 @@ public class DatasetRepository {
 		  sparql+="<"+dataset.getUri()+"> <http://www.w3.org/ns/dcat#landingPage> <" +dataset.getLandingPage()+">.";
 	  }
 	  if(dataset.getPublisher()!=null && !dataset.getPublisher().equals("")) {
-		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/publisher> \"" +dataset.getPublisher()+"\".";
+		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/publisher> <" +dataset.getPublisher()+">.";
 	  }
+	  
+	  //If there are info related to the dcat:Distribution
+	  if((dataset.getLicense()!=null && !dataset.getLicense().equals("")) ||
+		  (dataset.getMediaType()!=null && !dataset.getMediaType().equals("")) ||
+	      (dataset.getByteSize()!=null && !dataset.getByteSize().equals(""))){
+		  
+		  URI distributionURI=DatasetUtils.randomURI("distribution");
+		  
+		  sparql+="<"+dataset.getUri()+"> <http://www.w3.org/ns/dcat#distribution> <"+distributionURI+">."
+		  		+ "<"+distributionURI+"> a <http://www.w3.org/ns/dcat#Distribution>.";
+		  
+		  if(dataset.getLicense()!=null && !dataset.getLicense().equals("")) {
+			  sparql+="<"+distributionURI+"> <http://purl.org/dc/terms/license> <" +dataset.getLicense()+">.";
+		  } 
+			  
+		  if(dataset.getMediaType()!=null && !dataset.getMediaType().equals("")) {
+			  sparql+="<"+distributionURI+"> <http://www.w3.org/ns/dcat#mediaType> <" +dataset.getMediaType()+">.";
+		  }
+				  
+		  if(dataset.getByteSize()!=null && !dataset.getByteSize().equals("")) {
+			  sparql+="<"+distributionURI+"> <http://www.w3.org/ns/dcat#byteSize> " +dataset.getByteSize()+".";
+		  }		 	  
+	  }
+	  
 	  sparql+="}}";
 	  LOG.info(sparql);
 	  VirtGraph set = new VirtGraph ("jdbc:virtuoso://"+vp.getEndpoint()+":"+vp.getPort(), vp.getUser(), vp.getPassword());
@@ -110,6 +136,10 @@ public class DatasetRepository {
 			  query+= "FROM  <"+vp.getlanguageCodelistGraph()+">";
 		  }else if(codelist.equals(SPARQL_URIs.AGENT)) {
 			  query+= "FROM  <"+vp.getagentCodelistGraph()+">";
+		  }else if(codelist.equals(SPARQL_URIs.LICENSE)) {
+			  query+= "FROM  <"+vp.getlicenseCodelistGraph()+">";
+		  }else if(codelist.equals(SPARQL_URIs.MEDIA_TYPE)) {
+			  query+= "FROM  <"+vp.getmediaTypeCodelistGraph()+">";
 		  }
 		  //Agents are not in a skos code list.
 		  if(codelist.equals(SPARQL_URIs.AGENT)) {

@@ -9,8 +9,10 @@ export default {
     getUser(userId) {
         return AXIOS.get(`/user/` + userId);
     },
-    createDatasetMetadata(label_value,lang_value,issued_value,modified_value,periodicity_value, temporalStart_value, temporalEnd_value,
-    		temporalResolution_value, spatial_value, spatialResolution_value,conformsTo_value,landingPage_value,publisher_value) {
+    createDatasetMetadata(label_value,lang_value,issued_value,modified_value,periodicity_value, 
+    		temporalStart_value, temporalEnd_value, temporalResolution_value, spatial_value, 
+    		spatialResolution_value,conformsTo_value,landingPage_value,publisher_value,
+    		license_value, mediaType_value, byteSize_value) {
     	return AXIOS.post(`/dataset`,{label:label_value, 
     		                          language:lang_value,
     		                          issued:issued_value,
@@ -23,7 +25,10 @@ export default {
     		                          spatialResolution:spatialResolution_value,
     		                          conformsTo:conformsTo_value,
     		                          landingPage:landingPage_value,
-    		                          publisher:publisher_value});
+    		                          publisher:publisher_value,
+    		                          license:license_value,
+    		                          mediaType:mediaType_value,
+    		                          byteSize:byteSize_value});
     },
     getCodelistContent(codelistId){
     	return AXIOS.get(`/codelist/` + codelistId);    	

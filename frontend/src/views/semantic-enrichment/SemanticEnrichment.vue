@@ -111,7 +111,28 @@
     		<label class="font-weight-bold my-0">Landing page</label>
     		<p class="my-0"><small><em>A Web page to gain access to the dataset</em></small></p> 
     		<input type="text" v-model="dataset.landingPage" class="form-control" placeholder="Enter the landing page URL...">    		
-    	</div>    
+    	</div>
+    	<div  class="form-group"  >
+    		<label class="font-weight-bold my-0">License</label>
+    		<p class="my-0"><small><em>A legal document under which the distribution is made available.</em></small></p>
+    		<select v-if="isLicenseReady"  v-model="dataset.license" class="form-control"  >
+  			  <option v-for="lc in licenseCodeList" v-bind:value="lc.uri" >{{ lc.label }} </option>
+  			</select>    
+  			<div v-if="!isLicenseReady" v-cloak>
+  			   <input class="form-control" placeholder="Loading licenses">    	
+  			</div>  					
+    	</div>      	
+    	<div  class="form-group"  >
+    		<label class="font-weight-bold my-0">Media type</label>
+    		<p class="my-0"><small><em>A legal document under which the distribution is made available.</em></small></p>
+    		<select v-if="isMediaTypeReady"  v-model="dataset.mediaType" class="form-control"  >
+  			  <option v-for="mt in mediaTypeCodeList" v-bind:value="mt.uri" >{{ mt.label }} </option>
+  			</select>    
+  			<div v-if="!isMediaTypeReady" v-cloak>
+  			   <input class="form-control" placeholder="Loading media types">    	
+  			</div>  					
+    	</div>
+    	    	    
     	<button class="btn btn-primary" @click="createNewDataset()">Save metadata</button>
     </div>	
   </div>
@@ -147,9 +168,13 @@
         languageCodeList: [], 
         spatialCodeList:[],
         agentCodeList:[],
+        licenseCodeList:[],
+        mediaTypeCodeList:[],
         isLanguageReady: false,
         isSpatialReady:false,
         isAgentReady:false,
+        isMediaTypeReady:false,
+        isLicenseReady:false,
         showRetrievedUser: false
       }
     },
@@ -158,6 +183,8 @@
   	  this.getLanguageCodelist();
   	  this.getSpatialCodelist();
   	  this.getAgentCodelist();
+  	  this.getLicenseCodelist();
+  	  this.getMediaTypeCodelist()
     },
 	methods: {      
     	enterNewDataset(){
@@ -211,10 +238,11 @@
       // Fetches posts when the component is created.
       createNewDataset () {    	  
     	if(this.checkForm()){
-	        api.createDatasetMetadata(this.dataset.label, this.dataset.language, this.dataset.issued, this.dataset.modified, 
-	        		this.dataset.periodicity, this.dataset.temporalStart,this.dataset.temporalEnd,this.dataset.temporalResolution,
-	        		this.dataset.spatial,this.dataset.spatialResolution, this.dataset.conformsTo, this.dataset.landingPage,
-	        		this.dataset.publisher).then(response => {
+	        api.createDatasetMetadata(this.dataset.label, this.dataset.language, this.dataset.issued, 
+	        		this.dataset.modified,this.dataset.periodicity, this.dataset.temporalStart,
+	        		this.dataset.temporalEnd,this.dataset.temporalResolution,this.dataset.spatial,
+	        		this.dataset.spatialResolution, this.dataset.conformsTo, this.dataset.landingPage,
+	        		this.dataset.publisher,this.dataset.license,this.dataset.mediaType).then(response => {
 	            // JSON responses are automatically parsed.
 	            this.response = response.data;
 	            this.dataset.id = response.data;
@@ -261,6 +289,26 @@
               // JSON responses are automatically parsed.
               this.agentCodeList = response.data;    
               this.isAgentReady=true              
+            })           
+            .catch(e => {
+              this.errors.push(e)             
+            })    	  
+      },
+      getLicenseCodelist(){
+    	  api.getCodelistContent('LICENSE').then(response => {
+              // JSON responses are automatically parsed.
+              this.licenseCodeList = response.data;    
+              this.isLicenseReady=true              
+            })           
+            .catch(e => {
+              this.errors.push(e)             
+            })    	  
+      },
+      getMediaTypeCodelist(){
+    	  api.getCodelistContent('MEDIA_TYPE').then(response => {
+              // JSON responses are automatically parsed.
+              this.mediaTypeCodeList = response.data;    
+              this.isMediaTypeReady=true              
             })           
             .catch(e => {
               this.errors.push(e)             
