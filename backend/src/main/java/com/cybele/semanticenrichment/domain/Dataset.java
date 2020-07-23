@@ -1,7 +1,9 @@
 package com.cybele.semanticenrichment.domain;
 
 import java.net.URI;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -34,6 +36,10 @@ public class Dataset{
     
     //Database properties
     private String tableName;
+    
+    //Structure properties
+    @ElementCollection
+    private List<String> components;
     
   	public Dataset() {
 		super();
@@ -182,8 +188,16 @@ public class Dataset{
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
-		    
-    @Override
+	
+	public List<String> getComponents() {
+		return components;
+	}
+
+	public void setComponents(List<String> components) {
+		this.components = components;
+	}
+
+	@Override
 	public String toString() {
 		return "Dataset [uri=" + uri + ", label=" + label + ", conformsTo=" + conformsTo + ", language=" + language
 				+ ", publisher=" + publisher + ", modified=" + modified + ", issued=" + issued + ", accrualPeriodicity="
@@ -191,6 +205,6 @@ public class Dataset{
 				+ ", spatialResolutionInMeters=" + spatialResolution + ", temporalStart=" + temporalStart
 				+ ", temporalEnd=" + temporalEnd+ ", temporalResolution=" + temporalResolution 
 				+ ", license=" + license +", mediaType=" + mediaType + ", byteSize=" + byteSize
-				+ ", tableName=" + tableName+ "]";
+				+ ", tableName=" + tableName+ ", components=" + components+ "]";
 	}  
 }

@@ -123,11 +123,26 @@ public class DatasetRepository {
 			  		+ "<"+vp.getdbURI()+"> <https://w3id.org/cybele/accessTable> <"+tableURI+">."
 			  		+ "<"+tableURI+"> <https://w3id.org/cybele/tableName> \""+dataset.getTableName()+"\"."
 			  		+ "<"+tableURI+"> <http://purl.org/dc/terms/subject> <"+dataset.getUri()+">.";		    
+		  }	
+		  
+		  //if there info about the data structure
+		  if(dataset.getComponents()!=null && !dataset.getComponents().isEmpty()) {
+			  URI dsdURI=DatasetUtils.randomURI("dsd");
+			  sparql+= "<"+dsdURI+"> a <http://purl.org/linked-data/cube#DataStructureDefinition>."
+			  		+ "<"+dataset.getUri()+"> <http://purl.org/linked-data/cube#structure> <"+dsdURI+">.";
+			  for(String component:dataset.getComponents()) {
+				  URI componentSpecificationURI=DatasetUtils.randomURI("componentSpecification");  
+				  sparql+= "<"+componentSpecificationURI+"> a <http://purl.org/linked-data/cube#ComponentSpecification>."
+				  		+ "<"+dsdURI+"> <http://purl.org/linked-data/cube#component> <"+componentSpecificationURI+">."
+				  		+ "<"+componentSpecificationURI+"> <http://purl.org/linked-data/cube#dimension> "
+				  								+ "<https://w3id.org/cybele/component/id/"+component+">." ;
+			  }
 		  }
 	  }
 	  
 	  sparql+="}}";
 	  LOG.info(sparql);
+	  LOG.info(dataset.getComponents().toString());
 	  VirtGraph set = new VirtGraph ("jdbc:virtuoso://"+vp.getEndpoint()+":"+vp.getPort(), vp.getUser(), vp.getPassword());
 	  VirtuosoUpdateRequest update = VirtuosoUpdateFactory.create(sparql,set);
 	  update.exec();	   
