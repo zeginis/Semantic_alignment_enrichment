@@ -32,8 +32,10 @@ public class Dataset{
     private String mediaType;
     private String byteSize;
     
+    //Database properties
+    private String tableName;
     
-    public Dataset() {
+  	public Dataset() {
 		super();
 	}
                
@@ -172,6 +174,14 @@ public class Dataset{
 	public void setByteSize(String byteSize) {
 		this.byteSize = byteSize;
 	}
+	
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 		    
     @Override
 	public String toString() {
@@ -180,6 +190,7 @@ public class Dataset{
 				+ accrualPeriodicity + ", landingPage=" + landingPage + ", spatial=" + spatial
 				+ ", spatialResolutionInMeters=" + spatialResolution + ", temporalStart=" + temporalStart
 				+ ", temporalEnd=" + temporalEnd+ ", temporalResolution=" + temporalResolution 
-				+ ", license=" + license +", mediaType=" + mediaType + ", byteSize=" + byteSize+ "]";
+				+ ", license=" + license +", mediaType=" + mediaType + ", byteSize=" + byteSize
+				+ ", tableName=" + tableName+ "]";
 	}  
 }

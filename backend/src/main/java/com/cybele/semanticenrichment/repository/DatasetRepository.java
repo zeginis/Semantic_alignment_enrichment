@@ -65,7 +65,7 @@ public class DatasetRepository {
 		  						
 	  }
 	  if(dataset.getAccrualPeriodicity()!=null) {
-		  sparql+="<"+dataset.getUri()+"> <hhttp://purl.org/dc/terms/accrualPeriodicity> <" +dataset.getAccrualPeriodicity()+">.";
+		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/accrualPeriodicity> <" +dataset.getAccrualPeriodicity()+">.";
 	  }
 	  if(dataset.getTemporalStart()!=null && dataset.getTemporalEnd()!=null && !dataset.getTemporalStart().equals("") && !dataset.getTemporalEnd().equals("")) {
 		  URI temporalRandom=DatasetUtils.randomURI("temporal");
@@ -96,7 +96,8 @@ public class DatasetRepository {
 	  //If there are info related to the dcat:Distribution
 	  if((dataset.getLicense()!=null && !dataset.getLicense().equals("")) ||
 		  (dataset.getMediaType()!=null && !dataset.getMediaType().equals("")) ||
-	      (dataset.getByteSize()!=null && !dataset.getByteSize().equals(""))){
+	      (dataset.getByteSize()!=null && !dataset.getByteSize().equals(""))||
+	      (dataset.getTableName()!=null && !dataset.getTableName().equals(""))){
 		  
 		  URI distributionURI=DatasetUtils.randomURI("distribution");
 		  
@@ -112,8 +113,17 @@ public class DatasetRepository {
 		  }
 				  
 		  if(dataset.getByteSize()!=null && !dataset.getByteSize().equals("")) {
-			  sparql+="<"+distributionURI+"> <http://www.w3.org/ns/dcat#byteSize> " +dataset.getByteSize()+".";
-		  }		 	  
+			  sparql+="<"+distributionURI+"> <http://www.w3.org/ns/dcat#byteSize> \"" +dataset.getByteSize()+"\".";
+		  }	
+		  
+		  //If there are info about the DB
+		  if(dataset.getTableName()!=null && !dataset.getTableName().equals("")) {
+			  String tableURI="https://w3id.org/cybele/table/"+dataset.getTableName();
+			  sparql+= "<"+distributionURI+"> <https://w3id.org/cybele/accessDatabase> <"+vp.getdbURI()+">."
+			  		+ "<"+vp.getdbURI()+"> <https://w3id.org/cybele/accessTable> <"+tableURI+">."
+			  		+ "<"+tableURI+"> <https://w3id.org/cybele/tableName> \""+dataset.getTableName()+"\"."
+			  		+ "<"+tableURI+"> <http://purl.org/dc/terms/subject> <"+dataset.getUri()+">.";		    
+		  }
 	  }
 	  
 	  sparql+="}}";

@@ -18,9 +18,9 @@ public class VirtuosoProperties {
     private String licenseCodelistGraph;
     private String mediaTypeCodelistGraph;
     private String dataGraph;
-        
-	
-    public String getfrequencyCodelistGraph() {
+    private String dbURI;
+    	  
+	public String getfrequencyCodelistGraph() {
 		return frequencyCodelistGraph;
 	}
 	public void setfrequencyCodelistGraph(String frequencyCodelistGraph) {
@@ -88,6 +88,13 @@ public class VirtuosoProperties {
 	}
 	public void setmediaTypeCodelistGraph(String mediaTypeCodelistGraph) {
 		this.mediaTypeCodelistGraph = mediaTypeCodelistGraph;
+	}
+	
+	public String getdbURI() {
+		return dbURI;
+	}
+	public void setdbURI(String dbURI) {
+		this.dbURI = dbURI;
 	}
 }
 
