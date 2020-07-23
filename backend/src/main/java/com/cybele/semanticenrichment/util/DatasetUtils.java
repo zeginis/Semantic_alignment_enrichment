@@ -10,7 +10,7 @@ public class DatasetUtils {
 		URI uri=null;
     	Random rand = new Random();
 		try {
-			uri = new URI("https://www.cybele-project.eu/"+concept+"/id/"+Math.abs(rand.nextLong()));			
+			uri = new URI("https://w3id.org/cybele/"+concept+"/id/"+Math.abs(rand.nextLong()));			
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -18,3 +18,4 @@ public class DatasetUtils {
 		return uri;	
 	}
 }
+
