@@ -224,7 +224,7 @@
       	if(this.dataset.landingPage && !this.validURL(this.dataset.landingPage)){
       		 this.errors.push("Landing page is not a valid URL.");
       	}  
-      	if(!this.validURL(this.dataset.conformsTo)){
+      	if(this.dataset.conformsTo && !this.validURL(this.dataset.conformsTo)){
      		 this.errors.push("The conforms to standard is not a valid URL.");
      	}  
       	      	
@@ -242,7 +242,8 @@
 	        		this.dataset.modified,this.dataset.periodicity, this.dataset.temporalStart,
 	        		this.dataset.temporalEnd,this.dataset.temporalResolution,this.dataset.spatial,
 	        		this.dataset.spatialResolution, this.dataset.conformsTo, this.dataset.landingPage,
-	        		this.dataset.publisher,this.dataset.license,this.dataset.mediaType).then(response => {
+	        		this.dataset.publisher,this.dataset.license,this.dataset.mediaType,
+	        		"20","testTable",["test1","test2","test3"]).then(response => {
 	            // JSON responses are automatically parsed.
 	            this.response = response.data;
 	            this.dataset.id = response.data;
