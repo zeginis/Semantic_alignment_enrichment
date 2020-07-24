@@ -121,6 +121,7 @@ public class DatasetRepository {
 			  String tableURI="https://w3id.org/cybele/table/"+dataset.getTableName();
 			  sparql+= "<"+distributionURI+"> <https://w3id.org/cybele/accessDatabase> <"+vp.getdbURI()+">."
 			  		+ "<"+vp.getdbURI()+"> <https://w3id.org/cybele/accessTable> <"+tableURI+">."
+			  		+ "<"+tableURI+"> a <https://w3id.org/cybele/Table> ."
 			  		+ "<"+tableURI+"> <https://w3id.org/cybele/tableName> \""+dataset.getTableName()+"\"."
 			  		+ "<"+tableURI+"> <http://purl.org/dc/terms/subject> <"+dataset.getUri()+">.";		    
 		  }	
