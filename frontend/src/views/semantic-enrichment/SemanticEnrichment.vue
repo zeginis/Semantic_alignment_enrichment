@@ -215,9 +215,21 @@
       	if (!this.dataset.temporalEnd) {
               this.errors.push("Temporal end required.");
         }
+      	if((this.dataset.temporalStart && this.dataset.temporalEnd) &&
+      			!(new Date(this.dataset.temporalEnd) >= new Date(this.dataset.temporalStart))){
+            this.errors.push("Temporal start should be before temporal end.");
+        }
+      	
       	if(this.dataset.temporalResolution && !this.validDuration(this.dataset.temporalResolution)){
     		 this.errors.push("Temporal resolution \""+ this.dataset.temporalResolution +"\" is not in valid format.");
     	}
+      	if(this.dataset.issued && (new Date(this.dataset.issued) > Date.now())){
+      		this.errors.push("Issued data should be before the current date.");
+      	}
+      	if(this.dataset.modified && (new Date(this.dataset.modified) > Date.now())){
+      		this.errors.push("Modified data should be before the current date.");
+      	}
+      	
       	if (!this.dataset.spatial) {
             this.errors.push("Spatial required.");
       	} 
@@ -315,22 +327,6 @@
               this.errors.push(e)             
             })    	  
       }
-      
-     
-/*      retrieveUser () {
-        api.getUser(this.user.id).then(response => {
-            // JSON responses are automatically parsed.
-            this.retrievedUser = response.data;
-            this.showRetrievedUser = true
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
-      }
-      
-      <button v-if="showResponse"  @click="retrieveUser()">Retrieve user {{user.id}} data from database</button>
-
-      <h4 v-if="showRetrievedUser">Retrieved User {{retrievedUser.firstName}} {{retrievedUser.lastName}}</h4>*/
     }
   }
 
