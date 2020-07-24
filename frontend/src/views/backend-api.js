@@ -6,9 +6,6 @@ const AXIOS = axios.create({
 
 
 export default {
-    getUser(userId) {
-        return AXIOS.get(`/user/` + userId);
-    },
     createDatasetMetadata(label_value,lang_value,issued_value,modified_value,periodicity_value, 
     		temporalStart_value, temporalEnd_value, temporalResolution_value, spatial_value, 
     		spatialResolution_value,conformsTo_value,landingPage_value,publisher_value,
