@@ -11,6 +11,7 @@ variables:
   CCI_DEPLOY_HELM_CHART: registry.res.eng.it/cybele/helm/semantic-alignment-backend/master:latest
   CCI_DEV_DEPLOY_BRANCH: master
   CCI_DEPLOY_HELM_RELEASE_NAME: sae-dev
+  CCI_SONAR_ALLOW_FAILURE: 'true'
 
 mvn-install-file:
   image: ${CCI_MAVEN_IMAGE}
