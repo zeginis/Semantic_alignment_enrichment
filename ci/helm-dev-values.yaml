@@ -1,0 +1,7 @@
+imagePullSecrets:  
+  - name: gitlab-registry-credentials
+
+podAnnotations:
+  app.gitlab.com/app: cybele-data-semantic-alignment-enrichment
+  app.gitlab.com/env: semantic-alignment-enrichment-dev
+
