@@ -47,7 +47,11 @@ public class DatasetRepository {
 	public Dataset insertDataset(Dataset dataset) {
 	  LOG.info("Inserting dataset:"+dataset);
 	  if(dataset.getUri()==null) {
-		  dataset.setUri(DatasetUtils.randomURI("dataset"));
+		  if(dataset.getIdentifier()!=null) {
+			  dataset.setUri(DatasetUtils.uriFromID("dataset", dataset.getIdentifier()));
+		  }else {
+			  dataset.setUri(DatasetUtils.randomURI("dataset"));
+		  }		  
 	  }
 	  String sparql = "INSERT DATA{ GRAPH <"+vp.getDataGraph()+">{"
 	  		+ "<"+dataset.getUri()+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/dcat#Dataset>.";

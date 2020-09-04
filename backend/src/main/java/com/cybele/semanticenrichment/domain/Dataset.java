@@ -13,7 +13,9 @@ public class Dataset{
 	@Id
     private URI uri;
 	
-    private String label;
+	private String identifier;
+   
+	private String label;
     private String conformsTo;
     private String language;
     private String publisher;
@@ -53,6 +55,14 @@ public class Dataset{
 		this.uri = uri;
 	}
 
+	public String getIdentifier() {
+			return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+	
 	public String getLabel() {
 		return label;
 	}
@@ -205,6 +215,6 @@ public class Dataset{
 				+ ", spatialResolutionInMeters=" + spatialResolution + ", temporalStart=" + temporalStart
 				+ ", temporalEnd=" + temporalEnd+ ", temporalResolution=" + temporalResolution 
 				+ ", license=" + license +", mediaType=" + mediaType + ", byteSize=" + byteSize
-				+ ", tableName=" + tableName+ ", components=" + components+ "]";
+				+ ", tableName=" + tableName+ ", components=" + components+ ", identifier="+identifier+"]";
 	}  
 }

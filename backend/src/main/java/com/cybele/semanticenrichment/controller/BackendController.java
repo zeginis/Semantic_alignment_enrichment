@@ -33,8 +33,12 @@ public class BackendController {
             
     @PostMapping(path = "/dataset")
     @ResponseStatus(HttpStatus.CREATED)
-    public URI addNewDataset (@RequestBody Dataset dataset) {
-    	dataset.setUri(DatasetUtils.randomURI("dataset"));    	
+    public URI addNewDataset (@RequestBody Dataset dataset) {    	   	
+   		if(dataset.getIdentifier()!=null) {
+   			  dataset.setUri(DatasetUtils.uriFromID("dataset", dataset.getIdentifier()));
+   		}else {
+   			  dataset.setUri(DatasetUtils.randomURI("dataset"));   		
+   		}    	    	
     	Dataset insertedDataset= dtr.insertDataset(dataset);
 	    LOG.info(insertedDataset.getUri() + " successfully saved into DB");
 	    return insertedDataset.getUri();

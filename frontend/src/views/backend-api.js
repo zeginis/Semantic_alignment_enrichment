@@ -9,7 +9,7 @@ export default {
     createDatasetMetadata(label_value,lang_value,issued_value,modified_value,periodicity_value, 
     		temporalStart_value, temporalEnd_value, temporalResolution_value, spatial_value, 
     		spatialResolution_value,conformsTo_value,landingPage_value,publisher_value,
-    		license_value, mediaType_value, byteSize_value, tableName_value,components_value) {
+    		license_value, mediaType_value, byteSize_value, tableName_value,components_value,id_value) {
     	return AXIOS.post(`/dataset`,{label:label_value, 
     		                          language:lang_value,
     		                          issued:issued_value,
@@ -27,7 +27,8 @@ export default {
     		                          mediaType:mediaType_value,
     		                          byteSize:byteSize_value,
     		                          tableName:tableName_value,
-    		                          components:components_value});
+    		                          components:components_value,
+    		                          identifier:id_value});
     },
     getCodelistContent(codelistId){
     	return AXIOS.get(`/codelist/` + codelistId);    	

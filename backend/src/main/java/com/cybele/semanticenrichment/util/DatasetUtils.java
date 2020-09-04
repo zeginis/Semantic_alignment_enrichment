@@ -17,5 +17,17 @@ public class DatasetUtils {
 		}
 		return uri;	
 	}
+	
+	public static URI uriFromID(String concept, String id) {
+		URI uri=null;
+		try {
+			uri= new URI("https://w3id.org/cybele/"+concept+"/id/"+id);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uri;
+	}		
+	
 }
 
