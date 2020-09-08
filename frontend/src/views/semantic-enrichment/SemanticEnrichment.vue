@@ -324,7 +324,7 @@
 	        		this.dataset.temporalEnd,this.dataset.temporalResolution,spatialValue,
 	        		this.dataset.spatialResolution, this.dataset.conformsTo, this.dataset.landingPage,
 	        		this.dataset.publisher,this.dataset.license,this.dataset.mediaType,
-	        		"20","testTable",["test1__111","test2__222","test3_333"]).then(response => {
+	        		"20","testTable",["test1__111","test2__222","test3_333"],"testDatasetID").then(response => {
 	            // JSON responses are automatically parsed.
 	            this.response = response.data;
 	            this.dataset.id = response.data;
