@@ -75,15 +75,23 @@ public class DatasetRepository {
 		  URI temporalRandom=DatasetUtils.randomURI("temporal");
 		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/temporal> <" +temporalRandom+">."
 				+ "<" +temporalRandom+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/dc/terms/PeriodOfTime>." 
-		  		+ "<"+temporalRandom+"> <http://www.w3.org/ns/dcat#startDate> \"" + dataset.getTemporalStart()+"\"^^<http://www.w3.org/2001/XMLSchema#date>."
-		  		+ "<"+temporalRandom+"> <http://www.w3.org/ns/dcat#endDate> \""+dataset.getTemporalEnd()+"\"^^<http://www.w3.org/2001/XMLSchema#date>.";
+		  		+ "<"+temporalRandom+"> <http://www.w3.org/ns/dcat#startDate> \"" + dataset.getTemporalStart()+"\"^^<http://www.w3.org/2001/XMLSchema#dateTime>."
+		  		+ "<"+temporalRandom+"> <http://www.w3.org/ns/dcat#endDate> \""+dataset.getTemporalEnd()+"\"^^<http://www.w3.org/2001/XMLSchema#dateTime>.";
 	  }
 	  if(dataset.getTemporalResolution()!=null && !dataset.getTemporalResolution().equals("")) {
 		  sparql+="<"+dataset.getUri()+"> <http://www.w3.org/ns/dcat#temporalResolution> \"" +dataset.getTemporalResolution()+"\".";
 	  }
 	  if(dataset.getSpatial()!=null && !dataset.getSpatial().equals("")) {
-		  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/spatial> <" +dataset.getSpatial()+">.";
+		  if(dataset.getSpatial().contains("POLYGON(")) {
+			  URI spatialRandom=DatasetUtils.randomURI("spatial");
+			  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/spatial> <" +spatialRandom+">."					  
+					  +"<"+spatialRandom+"> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/dc/terms/Location>."
+					  +"<"+spatialRandom+"> <http://www.w3.org/ns/locn#geometry> "+dataset.getSpatial()+"^^<http://www.opengis.net/ont/geosparql#asWKT>.";
+			  }else {
+				  sparql+="<"+dataset.getUri()+"> <http://purl.org/dc/terms/spatial> <" +dataset.getSpatial()+">.";
+			  }		  
 	  }
+	  
 	  if(dataset.getSpatialResolution()!=null && !dataset.getSpatialResolution().equals("")) {
 		  sparql+="<"+dataset.getUri()+"> <http://www.w3.org/ns/dcat#spatialResolutionInMeters> " +dataset.getSpatialResolution()+" .";
 	  }
@@ -123,10 +131,10 @@ public class DatasetRepository {
 		  //If there are info about the DB
 		  if(dataset.getTableName()!=null && !dataset.getTableName().equals("")) {
 			  String tableURI="https://w3id.org/cybele/table/"+dataset.getTableName();
-			  sparql+= "<"+distributionURI+"> <https://w3id.org/cybele/accessDatabase> <"+vp.getdbURI()+">."
-			  		+ "<"+vp.getdbURI()+"> <https://w3id.org/cybele/accessTable> <"+tableURI+">."
-			  		+ "<"+tableURI+"> a <https://w3id.org/cybele/Table> ."
-			  		+ "<"+tableURI+"> <https://w3id.org/cybele/tableName> \""+dataset.getTableName()+"\"."
+			  sparql+= "<"+distributionURI+"> <https://w3id.org/cybele/model#accessDatabase> <"+vp.getdbURI()+">."
+			  		+ "<"+vp.getdbURI()+"> <https://w3id.org/cybele/model#accessTable> <"+tableURI+">."
+			  		+ "<"+tableURI+"> a <https://w3id.org/cybele/model#Table> ."
+			  		+ "<"+tableURI+"> <https://w3id.org/cybele/model#tableName> \""+dataset.getTableName()+"\"."
 			  		+ "<"+tableURI+"> <http://purl.org/dc/terms/subject> <"+dataset.getUri()+">.";		    
 		  }	
 		  

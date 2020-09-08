@@ -1,4 +1,5 @@
 <template>
+
   <div class="SemanticEnrichment">
   
   <img src="@/assets/images/semanticEnrichmentBanner.jpg" class="img-fluid" style="max-width:700px">  
@@ -73,11 +74,11 @@
     		<p class="my-0"><small><em>The temporal period that the dataset covers.</em></small></p>
   			<div class="card-body  py-1">
 		    	<label class="font-weight-bold">Start date</label>
-    			<input type="date" v-model="dataset.temporalStart" class="form-control" placeholder="Select or enter start date here...">    		
+    			<input type="datetime-local" v-model="dataset.temporalStart" class="form-control" placeholder="Select or enter start date here...">    		
     		</div>
     		<div class="card-body  py-1">
 				<label class="font-weight-bold">End date</label>
-    			<input type="date" v-model="dataset.temporalEnd" class="form-control" placeholder="Select or enter end date here...">    		
+    			<input type="datetime-local" v-model="dataset.temporalEnd" class="form-control" placeholder="Select or enter end date here...">    		
     		</div>    	
     	</div>
     	<div class="form-group">
@@ -89,14 +90,35 @@
     	</div>    	
     	<div  class="form-group"  >
     		<label class="font-weight-bold my-0">Spatial coverage *</label>
-    		<p class="my-0"><small><em>The geographical area covered by the dataset.</em></small></p>    		
-    		<select v-if="isSpatialReady"  v-model="dataset.spatial" class="form-control"  >
+    		<p class="my-0"><small><em>The geographical area covered by the dataset. Select a country OR enter the boundary box coordinates</em></small></p>    		
+    		<div class="py-2">
+  				<label class="px-2">Enter boundary box coordinates: </label>		
+  				<input type="checkbox" v-model="enterCoordinates">
+  			</div>
+    	
+    		<select v-if="isSpatialReady&!enterCoordinates"  v-model="dataset.spatial" class="form-control"  >
   			  <option v-for="c in spatialCodeList" v-bind:value="c.uri" >{{ c.label }} </option>
   			</select>    
-  			<div v-if="!isSpatialReady" v-cloak>
+  			<div v-if="!isSpatialReady&!enterCoordinates" v-cloak>
   			   <input class="form-control" placeholder="Loading Countries...">    	
-  			</div>  					
-    	</div>    	 	
+  			</div>    		
+  			
+  			<div v-if="enterCoordinates" class=" py-3"> 			   
+  			   	<label class="d-inline px-2">North: </label>
+  			   	<input type="text" class="form-control.d-inline" v-model="dataset.coordinateNorth" >
+  			   	
+  			   	<label class="d-inline px-2">South: </label>
+  			   	<input type="text" class="form-control.d-inline"  v-model="dataset.coordinateSouth">
+  			   	
+  			   	<label class="d-inline px-2">East: </label>
+  			   	<input type="text" class="form-control.d-inline" v-model="dataset.coordinateEast">
+  			   	
+  			   	<label class="font-weight-bold.d-inline px-2">West: </label>
+  			   	<input type="text" class="form-control.d-inline" v-model="dataset.coordinateWest">
+  			</div> 
+  			
+  			 					
+    	</div>   	
     	<div class="form-group">
     		<label class="font-weight-bold my-0" >Spatial resolution</label>
     		<p class="my-0"><small><em>Minimum spatial separation resolvable in a dataset, measured in meters. </em></small></p> 
@@ -157,6 +179,10 @@
           temporalEnd:null,
           temporalResolution:null,         
           spatial:null,
+          coordinateNorth:null,
+          coordinateSouth:null,
+          coordinateEast:null,
+          coordinateWest:null,
           spatialResolution:null,
           conformsTo:null,
           landingPage:null,
@@ -175,8 +201,9 @@
         isAgentReady:false,
         isMediaTypeReady:false,
         isLicenseReady:false,
-        showRetrievedUser: false
-      }
+        showRetrievedUser: false,
+        enterCoordinates:false
+        }
     },
     mounted() {    
   	  this.getAccrualPeriodicityCodelist();
@@ -184,7 +211,7 @@
   	  this.getSpatialCodelist();
   	  this.getAgentCodelist();
   	  this.getLicenseCodelist();
-  	  this.getMediaTypeCodelist()
+  	  this.getMediaTypeCodelist()  	  
     },
 	methods: {      
     	enterNewDataset(){
@@ -197,7 +224,16 @@
       	validDuration(str){
     	  var pattern = new RegExp('^(-?)P(?=.)((\\d+)Y)?((\\d+)M)?((\\d+)D)?(T(?=.)((\\d+)H)?((\\d+)M)?(\\d*(\\.\\d+)?S)?)?$');
     	  return pattern.test(str); 	  
-    	  },      
+    	  },
+      
+    	validLatitude(str){
+          var pattern = new RegExp('^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$');
+          return pattern.test(str); 	  
+       },
+       validLongtitude(str){
+           var pattern = new RegExp('^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$');
+           return pattern.test(str); 	  
+          }, 
       checkForm(){
     	this.errors = [];
       	if (!this.dataset.label) {
@@ -230,9 +266,33 @@
       		this.errors.push("Modified data should be before the current date.");
       	}
       	
-      	if (!this.dataset.spatial) {
+      	if (!this.enterCoordinates&!this.dataset.spatial) {
             this.errors.push("Spatial required.");
       	} 
+      	
+      	if (this.enterCoordinates&
+      			(!this.dataset.coordinateNorth||!this.dataset.coordinateSouth||
+      			 !this.dataset.coordinateEast ||!this.dataset.coordinateWest)) {
+            this.errors.push("All spatial coordinates should be enetred.");
+      	}
+      	
+      	if (this.enterCoordinates&!this.validLatitude(this.dataset.coordinateNorth)) {
+            this.errors.push("North coodrinate is not valid. Allowed values: [-90.00, 90.00]");
+      	}
+      	
+      	if (this.enterCoordinates&!this.validLatitude(this.dataset.coordinateSouth)) {
+            this.errors.push("South coodrinate is not valid. Allowed values: [-90.00, 90.00]");
+      	}
+      	
+      	if (this.enterCoordinates&!this.validLongtitude(this.dataset.coordinateEast)) {
+            this.errors.push("East coodrinate is not valid. Allowed values: [-180.00, 180.00]");
+      	}
+      	
+      	if (this.enterCoordinates&!this.validLongtitude(this.dataset.coordinateWest)) {
+            this.errors.push("West coodrinate is not valid. Allowed values: [-180.00, 180.00]");
+      	}
+      	
+      	
       	if(this.dataset.landingPage && !this.validURL(this.dataset.landingPage)){
       		 this.errors.push("Landing page is not a valid URL.");
       	}  
@@ -250,12 +310,21 @@
       // Fetches posts when the component is created.
       createNewDataset () {    	  
     	if(this.checkForm()){
+    		var spatialValue=null;
+    		if(this.enterCoordinates){
+    			spatialValue="\"POLYGON(("+this.dataset.coordinateEast+" " + this.dataset.coordinateSouth+","
+    			+this.dataset.coordinateEast+" " + this.dataset.coordinateNorth+","
+    			+this.dataset.coordinateWest+" " + this.dataset.coordinateNorth+","
+    			+this.dataset.coordinateWest+" " + this.dataset.coordinateSouth+"))\"";
+    		}else{
+    			spatialValue=this.dataset.spatial;
+    		}
 	        api.createDatasetMetadata(this.dataset.label, this.dataset.language, this.dataset.issued, 
 	        		this.dataset.modified,this.dataset.periodicity, this.dataset.temporalStart,
-	        		this.dataset.temporalEnd,this.dataset.temporalResolution,this.dataset.spatial,
+	        		this.dataset.temporalEnd,this.dataset.temporalResolution,spatialValue,
 	        		this.dataset.spatialResolution, this.dataset.conformsTo, this.dataset.landingPage,
 	        		this.dataset.publisher,this.dataset.license,this.dataset.mediaType,
-	        		"20","testTable",["test1","test2","test3"],"testdataid").then(response => {
+	        		"20","testTable",["test1__111","test2__222","test3_333"]).then(response => {
 	            // JSON responses are automatically parsed.
 	            this.response = response.data;
 	            this.dataset.id = response.data;
