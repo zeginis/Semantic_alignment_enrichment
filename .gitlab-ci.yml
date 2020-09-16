@@ -1,6 +1,6 @@
 include:
   - project: 'cybele/common/cicd-scripts'
-    ref: mvn-jobs
+    ref: 1.7.5
     file: '/pipelines/maven.yml'
 
 variables:
