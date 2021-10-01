@@ -165,12 +165,12 @@ public class DatasetRepository {
   public List<SKOSConcept> getCodelistContent(String codelist) {
 	  
 	  List<SKOSConcept> list=cache.get(codelist);
-	  
 	  if(list==null) {
 		  list=new ArrayList<SKOSConcept>();
 		  String codelistURI=SPARQL_URIs.CODELISTS.get(codelist);
 		  if(codelistURI!=null || codelist.equals(SPARQL_URIs.AGENT)) {
 			  LOG.info("Retrieving codelist:"+codelist);
+			  LOG.info("DATA GRAPH:"+vp.getDataGraph());
 			  String query="PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
 			  		+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
 			  		+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
