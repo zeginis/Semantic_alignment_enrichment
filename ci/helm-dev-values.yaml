@@ -5,3 +5,5 @@ podAnnotations:
   app.gitlab.com/app: cybele-data-semantic-alignment-enrichment
   app.gitlab.com/env: semantic-alignment-enrichment-dev
 
+virtuoso:
+  dataGraph: https://w3id.org/cybele/datasets/ENG-TEST
