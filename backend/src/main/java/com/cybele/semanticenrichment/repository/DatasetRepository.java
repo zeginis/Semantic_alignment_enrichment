@@ -146,9 +146,15 @@ public class DatasetRepository {
 			  for(String component:dataset.getComponents()) {
 				  URI componentSpecificationURI=DatasetUtils.randomURI("componentSpecification");  
 				  sparql+= "<"+componentSpecificationURI+"> a <http://purl.org/linked-data/cube#ComponentSpecification>."
-				  		+ "<"+dsdURI+"> <http://purl.org/linked-data/cube#component> <"+componentSpecificationURI+">."
-				  		+ "<"+componentSpecificationURI+"> <http://purl.org/linked-data/cube#dimension> "
-				  								+ "<https://w3id.org/cybele/component/id/"+component+">." ;
+				  		+ "<"+dsdURI+"> <http://purl.org/linked-data/cube#component> <"+componentSpecificationURI+">.";
+				  if(SPARQL_URIs.MEASURE_COMPONENTS.contains(component)) { //It is a measure
+					  sparql+="<"+componentSpecificationURI+"> <http://purl.org/linked-data/cube#measure> "
+								+ "<https://w3id.org/cybele/component/id/"+component+">.";
+				  }else {   //It is a dimension
+					  sparql+="<"+componentSpecificationURI+"> <http://purl.org/linked-data/cube#dimension> "
+								+ "<https://w3id.org/cybele/component/id/"+component+">.";
+				  }
+				  		
 			  }
 		  }
 	  }
