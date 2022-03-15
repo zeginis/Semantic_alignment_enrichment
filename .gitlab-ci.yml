@@ -12,7 +12,7 @@ variables:
   CCI_DEV_DEPLOY_BRANCH: master
   CCI_DEPLOY_HELM_RELEASE_NAME: sae-dev
   CCI_SONAR_ALLOW_FAILURE: 'true'
-  CCI_MAVEN_IMAGE: 3.8.4-jdk-11
+  CCI_MAVEN_IMAGE: maven:3.8.4-jdk-11
 
 mvn-install-file:
   image: ${CCI_MAVEN_IMAGE}
